@@ -111,3 +111,27 @@ If you set `table=true`, you will get a glossary table with all the terms you've
 `{{{< glossary table=true >}}}`
 
 {{< glossary table=true >}}
+
+## Accessibility Features
+
+This extension is designed to be fully accessible and meets WCAG 2.2 AA standards:
+
+### Keyboard Navigation
+- Use **Tab** to navigate between glossary terms
+- Press **Enter** or **Space** to open/close definition popups
+- Press **Escape** to close any open popup
+- Focus indicators clearly show which term is selected
+
+### Screen Reader Support
+- Proper ARIA attributes ensure definitions are announced correctly
+- Terms are marked with `role="button"` and `aria-expanded` states
+- Definitions use `role="tooltip"` and are linked via `aria-describedby`
+
+### User Experience
+- Only one popup is visible at a time for clarity
+- Popups can be dismissed by clicking outside or pressing Escape
+- Definitions persist until explicitly closed (no accidental dismissal)
+- Visual focus indicators help keyboard users understand their location
+
+### Removed Features
+The "hover" popup mode has been removed as it relied on native browser tooltips that do not meet accessibility standards. All functionality is now available through the accessible "click" mode.
