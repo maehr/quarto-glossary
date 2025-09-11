@@ -123,9 +123,9 @@ This extension is designed to be fully accessible and meets WCAG 2.2 AA standard
 - Focus indicators clearly show which term is selected
 
 ### Screen Reader Support
-- Proper ARIA attributes ensure definitions are announced correctly
-- Terms are marked with `role="button"` and `aria-expanded` states
-- Definitions use `role="tooltip"` and are linked via `aria-describedby`
+- Bootstrap popovers provide built-in ARIA support
+- Terms are marked with proper Bootstrap popover attributes
+- Definitions are announced correctly when activated
 
 ### User Experience
 - Only one popup is visible at a time for clarity
@@ -133,5 +133,12 @@ This extension is designed to be fully accessible and meets WCAG 2.2 AA standard
 - Definitions persist until explicitly closed (no accidental dismissal)
 - Visual focus indicators help keyboard users understand their location
 
+### Technical Implementation
+This extension leverages Quarto's built-in Bootstrap functionality:
+- Uses Bootstrap 5 popovers for reliable cross-browser compatibility
+- No custom positioning or styling code needed
+- Automatic responsive behavior on mobile devices
+- Built-in accessibility features from Bootstrap framework
+
 ### Removed Features
-The "hover" popup mode has been removed as it relied on native browser tooltips that do not meet accessibility standards. All functionality is now available through the accessible "click" mode.
+The "hover" popup mode has been removed as it relied on native browser tooltips that do not meet accessibility standards. All functionality is now available through the accessible "click" mode using Bootstrap popovers.
