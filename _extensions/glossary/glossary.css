@@ -1,43 +1,41 @@
 .glossary {
   color: purple;
   text-decoration: underline;
-  cursor: pointer;
+  cursor: help;
+  position: relative;
   border: none;
-  padding: 2px;
-  background: transparent;
-  font: inherit;
+  padding: 0;
 }
 
-/* Focus styles for accessibility */
-.glossary:focus {
-  outline: 2px solid #0066cc;
-  outline-offset: 2px;
+/* only needed for popup = "click" */
+/* popup-definition */
+.glossary .def {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  width: 200px;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -100px;
+  background-color: #333;
+  color: white;
+  padding: 5px;
+  border-radius: 6px;
 }
-
-/* Hover styles */
-.glossary:hover {
-  background-color: rgba(128, 0, 128, 0.1);
+/* show on click */
+.glossary:active .def {
+  display: inline-block;
 }
-
-/* Bootstrap popover customization */
-.popover {
-  max-width: 300px;
-}
-
-.popover-body {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-/* Responsive adjustments for mobile */
-@media (max-width: 768px) {
-  .popover {
-    max-width: 250px;
-  }
-  
-  .popover-body {
-    font-size: 13px;
-  }
+/* triangle arrow */
+.glossary:active .def::after {
+  content: ' ';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
 }
 
 /* glossary table styles */
