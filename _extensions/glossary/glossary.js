@@ -1,146 +1,86 @@
 /**
- * Accessible Glossary JavaScript
- * Provides WCAG 2.2 AA compliant interaction for glossary terms
+ * Bootstrap Popover Initialization for Glossary
+ * Uses Quarto's built-in Bootstrap functionality
  */
 
 (function() {
   'use strict';
 
-  let currentOpenPopup = null;
-
   /**
-   * Close the currently open popup
+   * Initialize Bootstrap popovers for glossary terms
    */
-  function closeCurrentPopup() {
-    if (currentOpenPopup) {
-      const button = currentOpenPopup;
-      const popup = button.querySelector('.def');
-      
-      button.setAttribute('aria-expanded', 'false');
-      popup.style.display = 'none';
-      currentOpenPopup = null;
+  function initializeGlossaryPopovers() {
+    // Check if Bootstrap is available
+    if (typeof window.bootstrap === 'undefined') {
+      console.warn('Bootstrap not found. Popovers will not work.');
+      return;
     }
-  }
 
-  /**
-   * Toggle popup for a glossary button
-   * @param {HTMLElement} button - The glossary button element
-   */
-  function togglePopup(button) {
-    const popup = button.querySelector('.def');
-    const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
-    // Close any currently open popup
-    closeCurrentPopup();
-
-    if (!isExpanded) {
-      // Open this popup
-      button.setAttribute('aria-expanded', 'true');
-      popup.style.display = 'block';
-      currentOpenPopup = button;
-      
-      // Announce to screen readers that the popup opened
-      popup.setAttribute('aria-live', 'polite');
-    }
-  }
-
-  /**
-   * Handle keyboard events for glossary buttons
-   * @param {KeyboardEvent} event - The keyboard event
-   */
-  function handleKeydown(event) {
-    const button = event.target;
+    // Initialize all glossary popovers
+    const glossaryElements = document.querySelectorAll('.glossary[data-bs-toggle="popover"]');
     
-    switch (event.key) {
-      case 'Enter':
-      case ' ': // Space key
-        event.preventDefault();
-        togglePopup(button);
-        break;
-      case 'Escape':
-        event.preventDefault();
-        closeCurrentPopup();
-        button.focus(); // Return focus to the button
-        break;
-    }
-  }
-
-  /**
-   * Handle click events for glossary buttons
-   * @param {MouseEvent} event - The click event
-   */
-  function handleClick(event) {
-    event.preventDefault();
-    togglePopup(event.target);
-  }
-
-  /**
-   * Close popup when clicking outside
-   * @param {MouseEvent} event - The click event
-   */
-  function handleDocumentClick(event) {
-    if (currentOpenPopup && !currentOpenPopup.contains(event.target)) {
-      closeCurrentPopup();
-    }
-  }
-
-  /**
-   * Initialize glossary accessibility features
-   */
-  function initializeGlossary() {
-    // Find all glossary buttons
-    const glossaryButtons = document.querySelectorAll('.glossary[aria-expanded]');
-
-    glossaryButtons.forEach(button => {
-      // Add event listeners
-      button.addEventListener('click', handleClick);
-      button.addEventListener('keydown', handleKeydown);
-      
-      // Ensure button is focusable
-      if (!button.hasAttribute('tabindex')) {
-        button.setAttribute('tabindex', '0');
+    glossaryElements.forEach(function(element) {
+      // Skip if already initialized
+      if (window.bootstrap.Popover.getInstance(element)) {
+        return;
       }
 
-      // Ensure proper button role
-      if (!button.hasAttribute('role')) {
-        button.setAttribute('role', 'button');
-      }
+      new window.bootstrap.Popover(element, {
+        trigger: 'click',
+        placement: 'top',
+        html: false,
+        sanitize: true,
+        container: 'body'
+      });
     });
 
-    // Add document click listener to close popups when clicking outside
-    document.addEventListener('click', handleDocumentClick);
-
-    // Close popup on Escape key anywhere in document
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape' && currentOpenPopup) {
-        closeCurrentPopup();
-      }
+    // Close other popovers when one is opened (only one at a time)
+    glossaryElements.forEach(function(element) {
+      element.addEventListener('show.bs.popover', function() {
+        // Hide all other popovers
+        glossaryElements.forEach(function(otherElement) {
+          if (otherElement !== element) {
+            const popover = window.bootstrap.Popover.getInstance(otherElement);
+            if (popover) {
+              popover.hide();
+            }
+          }
+        });
+      });
     });
   }
 
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeGlossary);
+    document.addEventListener('DOMContentLoaded', initializeGlossaryPopovers);
   } else {
-    initializeGlossary();
+    initializeGlossaryPopovers();
   }
 
   // Re-initialize if new content is added dynamically
   const observer = new MutationObserver(function(mutations) {
+    let shouldReinitialize = false;
+    
     mutations.forEach(function(mutation) {
       if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-        // Check if any new glossary buttons were added
         mutation.addedNodes.forEach(function(node) {
           if (node.nodeType === Node.ELEMENT_NODE) {
-            const newButtons = node.querySelectorAll ? node.querySelectorAll('.glossary[aria-expanded]') : [];
-            if (newButtons.length > 0 || (node.matches && node.matches('.glossary[aria-expanded]'))) {
-              // Re-initialize for new buttons
-              setTimeout(initializeGlossary, 0);
+            if (node.matches && node.matches('.glossary[data-bs-toggle="popover"]')) {
+              shouldReinitialize = true;
+            } else if (node.querySelectorAll) {
+              const newElements = node.querySelectorAll('.glossary[data-bs-toggle="popover"]');
+              if (newElements.length > 0) {
+                shouldReinitialize = true;
+              }
             }
           }
         });
       }
     });
+
+    if (shouldReinitialize) {
+      setTimeout(initializeGlossaryPopovers, 0);
+    }
   });
 
   observer.observe(document.body, {

@@ -160,17 +160,19 @@ return {
     globalGlossaryTable[term] = def
   end
 
-  -- Generate unique ID for this glossary term
+  -- Generate unique ID for this glossary term (still needed for potential future use)
   local glossary_id = "glossary-" .. term:gsub("%s+", "-"):gsub("[^%w%-]", "") .. "-" .. math.random(1000, 9999)
-  local popup_id = glossary_id .. "-popup"
 
   if options.popup == "click" then
+    -- Use Bootstrap popover with accessible attributes
     glosstext = "<button class='glossary' " ..
                 "id='" .. glossary_id .. "' " ..
-                "aria-expanded='false' " ..
-                "aria-describedby='" .. popup_id .. "' " ..
+                "data-bs-toggle='popover' " ..
+                "data-bs-content='" .. def:gsub("'", "&apos;") .. "' " ..
+                "data-bs-trigger='click' " ..
+                "data-bs-placement='top' " ..
+                "tabindex='0' " ..
                 "data-glossary-term='" .. term .. "'>" ..
-                "<span class='def' id='" .. popup_id .. "' role='tooltip'>" .. def .. "</span>" .. 
                 display .. "</button>"
   elseif options.popup == "none" then
     glosstext = "<span class='glossary'>" .. display .. "</span>"
@@ -178,10 +180,12 @@ return {
     -- Default to click behavior for any other option (including former "hover")
     glosstext = "<button class='glossary' " ..
                 "id='" .. glossary_id .. "' " ..
-                "aria-expanded='false' " ..
-                "aria-describedby='" .. popup_id .. "' " ..
+                "data-bs-toggle='popover' " ..
+                "data-bs-content='" .. def:gsub("'", "&apos;") .. "' " ..
+                "data-bs-trigger='click' " ..
+                "data-bs-placement='top' " ..
+                "tabindex='0' " ..
                 "data-glossary-term='" .. term .. "'>" ..
-                "<span class='def' id='" .. popup_id .. "' role='tooltip'>" .. def .. "</span>" .. 
                 display .. "</button>"
   end
 
