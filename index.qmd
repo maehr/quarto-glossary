@@ -38,7 +38,7 @@ glossary:
   show: true
 ```
 
-Set path to the path to your glossary YAML file, popup to "click", "hover", or "none", and show to true or false. You can change these defaults for any individual inline glossary item.
+Set path to the path to your glossary YAML file, popup to "click" or "none", and show to true or false. You can change these defaults for any individual inline glossary item.
 
 
 ## Examples
@@ -72,17 +72,11 @@ Add a `display` argument if you want to display something different than the ter
 
 ### Popups 
 
-The default is "click", which allows you to use styled html in the popup (see [Styles](#styles) below).
+The default is "click", which allows you to use styled html in the popup and provides full keyboard accessibility.
 
 `{{{< glossary alpha popup="click" >}}}`
 
 {{< glossary alpha popup="click" >}}
-
-The "hover" option uses the web browser's built-in tooltip styles, so you can't use html in the definitions. However, you can now set the click event to open a link. 
-
-`[{{{< glossary alpha popup="hover" >}}}](https://psyteachr.github.io/glossary/a#alpha)`
-
-[{{< glossary alpha popup="hover" >}}](https://psyteachr.github.io/glossary/a#alpha)
 
 Set popup to "none" if you want to add the definition to the glossary table, but not use a popup.
 

@@ -1,34 +1,52 @@
 .glossary {
   color: purple;
   text-decoration: underline;
-  cursor: help;
+  cursor: pointer;
   position: relative;
   border: none;
-  padding: 0;
+  padding: 2px;
+  background: transparent;
+  font: inherit;
 }
 
-/* only needed for popup = "click" */
-/* popup-definition */
+/* Focus styles for accessibility */
+.glossary:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Hover styles */
+.glossary:hover {
+  background-color: rgba(128, 0, 128, 0.1);
+}
+
+/* Popup definition styles */
 .glossary .def {
   display: none;
   position: absolute;
-  z-index: 1;
-  width: 200px;
+  z-index: 1000;
+  width: 250px;
   bottom: 100%;
   left: 50%;
-  margin-left: -100px;
+  margin-left: -125px;
   background-color: #333;
   color: white;
-  padding: 5px;
+  padding: 8px 12px;
   border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  word-wrap: break-word;
 }
-/* show on click */
-.glossary:active .def {
-  display: inline-block;
+
+/* Show popup when aria-expanded is true */
+.glossary[aria-expanded="true"] .def {
+  display: block;
 }
-/* triangle arrow */
-.glossary:active .def::after {
-  content: ' ';
+
+/* Triangle arrow pointing down */
+.glossary[aria-expanded="true"] .def::after {
+  content: '';
   position: absolute;
   top: 100%;
   left: 50%;
@@ -36,6 +54,15 @@
   border-width: 5px;
   border-style: solid;
   border-color: #333 transparent transparent transparent;
+}
+
+/* Responsive popup positioning */
+@media (max-width: 768px) {
+  .glossary .def {
+    width: 200px;
+    margin-left: -100px;
+    font-size: 13px;
+  }
 }
 
 /* glossary table styles */
