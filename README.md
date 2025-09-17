@@ -1,9 +1,9 @@
 # Glossary Extension for Quarto
 
 
-This extension provides shortcodes for defining terms and creating interactive glossaries 
+This extension provides shortcodes for defining terms and creating glossaries 
 in quarto. You can use this to mark terms in your text, which can display a popup 
-definition, and to create a searchable, sortable listing of defined terms at the end of a document.
+definition, and to create table of defined terms at the end of a document.
 
 See <https://debruine.github.io/quarto-glossary> for examples.
 
@@ -15,16 +15,6 @@ quarto install extension debruine/quarto-glossary
 
 This will install the extension under the `_extensions` subdirectory.
 If you're using version control, you will want to check in this directory.
-
-## Features
-
-- **Interactive glossary listings**: Searchable and sortable term listings
-- **Full keyboard support**: Navigate with Tab, activate with Enter or Space, dismiss with Escape
-- **Screen reader compatible**: Uses proper ARIA attributes and roles
-- **Visible focus indicators**: Clear focus outlines for keyboard navigation
-- **Dismissible content**: Popups can be closed by clicking outside, pressing Escape, or clicking another term
-- **No hover-only content**: All functionality is available through keyboard and mouse interaction
-- **Responsive design**: Works seamlessly on desktop and mobile devices
 
 ## Accessibility
 
