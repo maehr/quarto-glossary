@@ -40,7 +40,7 @@
   }
 }
 
-/* glossary table styles */
+/* Legacy glossary table styles for backward compatibility */
 .glossary_table td {
   vertical-align: top;
 }
@@ -55,4 +55,77 @@
 
 .glossary_table tr:nth-child(even) {
   background-color: #99999933;
+}
+
+/* New Quarto Listing Styles */
+.quarto-listing {
+  margin: 1rem 0;
+}
+
+.listing-controls {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+.listing-controls .form-control {
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .listing-controls .form-control {
+    margin-bottom: 0;
+  }
+}
+
+#glossary-items .list-group-item {
+  border-left: 4px solid #6f42c1;
+  margin-bottom: 0.5rem;
+  border-radius: 0.375rem;
+}
+
+#glossary-items .list-group-item:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+#glossary-items .list-group-item h6 {
+  color: #6f42c1;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+#glossary-items .list-group-item p {
+  color: #6c757d;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+/* Search and sort controls styling */
+#glossary-search {
+  border: 2px solid #e9ecef;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+#glossary-search:focus {
+  border-color: #6f42c1;
+  box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+}
+
+#glossary-sort {
+  border: 2px solid #e9ecef;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  background-color: white;
+}
+
+#glossary-sort:focus {
+  border-color: #6f42c1;
+  box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
 }

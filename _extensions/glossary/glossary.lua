@@ -113,18 +113,43 @@ return {
 
   -- create glossary table
   if kwExists(kwargs, "table") then
-    local gt = "<table class='glossary_table'>\n"
-    gt = gt .. "<tr><th> Term </th><th> Definition </th></tr>\n"
-
+    -- Generate a Quarto listing instead of a simple HTML table
     local sortedTable = sortByKeys(globalGlossaryTable)
-
+    
+    -- Create JSON data for the listing manually
+    local jsonItems = {}
     for key, value in pairs(sortedTable) do
-        gt = gt .. "<tr><td>" .. key
-        gt = gt .. "</td><td>" .. value .. "</td></tr>\n"
+        -- Escape JSON strings
+        local escapedKey = key:gsub('"', '\\"'):gsub('\n', '\\n')
+        local escapedValue = value:gsub('"', '\\"'):gsub('\n', '\\n')
+        table.insert(jsonItems, string.format('{"term":"%s","definition":"%s"}', escapedKey, escapedValue))
     end
-    gt = gt .. "</table>"
-
-    return pandoc.RawBlock('html', gt)
+    local itemsJson = '[' .. table.concat(jsonItems, ',') .. ']'
+    
+    -- Create the listing HTML with embedded data
+    local listingHtml = string.format([[
+<div id="glossary-listing" class="quarto-listing">
+<script type="application/json" data-glossary-items>%s</script>
+<div class="listing-controls mb-3">
+  <div class="row">
+    <div class="col-md-8">
+      <input type="text" id="glossary-search" class="form-control" placeholder="Search terms..." />
+    </div>
+    <div class="col-md-4">
+      <select id="glossary-sort" class="form-control">
+        <option value="term-asc">Term (A-Z)</option>
+        <option value="term-desc">Term (Z-A)</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div id="glossary-items" class="list-group">
+  <!-- Items will be populated by JavaScript -->
+</div>
+</div>
+]], itemsJson)
+    
+    return pandoc.RawBlock('html', listingHtml)
   end
 
   -- or set up in-text term
