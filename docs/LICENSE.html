@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -74,8 +40,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script src="site_libs/quarto-contrib/glossary/glossary.js"></script>
-<link href="site_libs/quarto-contrib/glossary/glossary.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -128,31 +92,7 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quarto-glossary" id="toc-quarto-glossary" class="nav-link active" data-scroll-target="#quarto-glossary">Quarto-glossary</a>
-  <ul class="collapse">
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a>
-  <ul class="collapse">
-  <li><a href="#installing" id="toc-installing" class="nav-link" data-scroll-target="#installing">Installing</a></li>
-  <li><a href="#glossary-file" id="toc-glossary-file" class="nav-link" data-scroll-target="#glossary-file">Glossary file</a></li>
-  <li><a href="#defaults" id="toc-defaults" class="nav-link" data-scroll-target="#defaults">Defaults</a></li>
-  </ul></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a>
-  <ul class="collapse">
-  <li><a href="#display" id="toc-display" class="nav-link" data-scroll-target="#display">Display</a></li>
-  <li><a href="#popups" id="toc-popups" class="nav-link" data-scroll-target="#popups">Popups</a></li>
-  <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions">Definitions</a></li>
-  <li><a href="#add-to-table" id="toc-add-to-table" class="nav-link" data-scroll-target="#add-to-table">Add to Table</a></li>
-  <li><a href="#table" id="toc-table" class="nav-link" data-scroll-target="#table">Table</a></li>
-  </ul></li>
-  <li><a href="#accessibility-features" id="toc-accessibility-features" class="nav-link" data-scroll-target="#accessibility-features">Accessibility Features</a>
-  <ul class="collapse">
-  <li><a href="#keyboard-navigation" id="toc-keyboard-navigation" class="nav-link" data-scroll-target="#keyboard-navigation">Keyboard Navigation</a></li>
-  <li><a href="#screen-reader-support" id="toc-screen-reader-support" class="nav-link" data-scroll-target="#screen-reader-support">Screen Reader Support</a></li>
-  <li><a href="#user-experience" id="toc-user-experience" class="nav-link" data-scroll-target="#user-experience">User Experience</a></li>
-  <li><a href="#technical-implementation" id="toc-technical-implementation" class="nav-link" data-scroll-target="#technical-implementation">Technical Implementation</a></li>
-  <li><a href="#removed-features" id="toc-removed-features" class="nav-link" data-scroll-target="#removed-features">Removed Features</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="#mit-license" id="toc-mit-license" class="nav-link active" data-scroll-target="#mit-license">MIT License</a></li>
   </ul>
 </nav>
     </div>
@@ -162,130 +102,14 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 
 
 
-<section id="quarto-glossary" class="level1">
-<h1>Quarto-glossary</h1>
-<p>This extension provides shortcodes for <a href="https://github.com/debruine/quarto-glossary">glossary</a> in quarto.</p>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<section id="installing" class="level3">
-<h3 class="anchored" data-anchor-id="installing">Installing</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> install extension debruine/quarto-glossary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This will install the extension under the <code>_extensions</code> subdirectory. If you’re using version control, you will want to check in this directory.</p>
-</section>
-<section id="glossary-file" class="level3">
-<h3 class="anchored" data-anchor-id="glossary-file">Glossary file</h3>
-<p>You can store definitions in a YAML file. Use markdown to create paragraphs, links, and lists. Make sure each new line in a definition is indented two spaces (sorry YAML is a bit picky, but it’s the best human-editable solution).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SESOI</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  Smallest Effect Size of Interest: the smallest effect that is theoretically or practically meaningful</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  See [Equivalence Testing for Psychological Research](https://doi.org/10.1177/2515245918770963) for a tutorial on methods for choosing an SESOI.</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">p-value</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  The probability of the observed data, or more extreme data, if the null hypothesis is true. The lower the p-value, the higher the test statistic, and less likely it is to observe the data if the null hypothesis is true.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="defaults" class="level3">
-<h3 class="anchored" data-anchor-id="defaults">Defaults</h3>
-<p>In the YAML header of your document, or the _quarto.yml file for your book or website, add the following defaults:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glossary</span><span class="kw">:</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">path</span><span class="kw">:</span><span class="at"> glossary.yml</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">popup</span><span class="kw">:</span><span class="at"> click</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">show</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Set path to the path to your glossary YAML file, popup to “click” or “none”, and show to true or false. You can change these defaults for any individual inline glossary item.</p>
-</section>
-</section>
-<section id="examples" class="level2">
-<h2 class="anchored" data-anchor-id="examples">Examples</h2>
-<p>The simplest use starts with the word <code>glossary</code> and then the term to be defined. Click on the underlined word to see a pop-up definition.</p>
-<p><code>{{&lt; glossary power &gt;}}</code></p>
-<p><button class="glossary" id="glossary-power-1195" data-bs-toggle="popover" data-bs-content="The probability of rejecting the null hypothesis when it is false, for a specific analysis, effect size, sample size, and criteria for significance." data-bs-trigger="click" data-bs-placement="top" tabindex="0" data-glossary-term="power">power</button></p>
-<section id="display" class="level3">
-<h3 class="anchored" data-anchor-id="display">Display</h3>
-<p>No need to change if you’re just using different case:</p>
-<p><code>{{&lt; glossary Power &gt;}}</code></p>
-<p><button class="glossary" id="glossary-power-2834" data-bs-toggle="popover" data-bs-content="The probability of rejecting the null hypothesis when it is false, for a specific analysis, effect size, sample size, and criteria for significance." data-bs-trigger="click" data-bs-placement="top" tabindex="0" data-glossary-term="power">Power</button></p>
-<p>Use quotes if your term is more than one word.</p>
-<p><code>{{&lt; glossary "effect size" &gt;}}</code></p>
-<p><button class="glossary" id="glossary-effect-size-9993" data-bs-toggle="popover" data-bs-content="‘quantitative reflection of the magnitude of some phenomenon that is used for the purpose of addressing a question of interest’ (Kelley &amp; Preacher, 2012)" data-bs-trigger="click" data-bs-placement="top" tabindex="0" data-glossary-term="effect size">effect size</button></p>
-<p>Add a <code>display</code> argument if you want to display something different than the term:</p>
-<p><code>{{&lt; glossary alpha display="alpha criterion" &gt;}}</code></p>
-<p><button class="glossary" id="glossary-alpha-4919" data-bs-toggle="popover" data-bs-content="The threshold chosen in Neyman-Pearson hypothesis testing to distinguish test results that lead to the decision to reject the null hypothesis, or not, based on the desired upper bound of the Type 1 error rate. An alpha level of 5% is most commonly used, but other alpha levels can be used as long as they are determined and preregistered by the researcher before the data is analyzed." data-bs-trigger="click" data-bs-placement="top" tabindex="0" data-glossary-term="alpha">alpha criterion</button></p>
-</section>
-<section id="popups" class="level3">
-<h3 class="anchored" data-anchor-id="popups">Popups</h3>
-<p>The default is “click”, which allows you to use styled html in the popup and provides full keyboard accessibility.</p>
-<p><code>{{&lt; glossary alpha popup="click" &gt;}}</code></p>
-<p><button class="glossary" id="glossary-alpha-8401" data-bs-toggle="popover" data-bs-content="The threshold chosen in Neyman-Pearson hypothesis testing to distinguish test results that lead to the decision to reject the null hypothesis, or not, based on the desired upper bound of the Type 1 error rate. An alpha level of 5% is most commonly used, but other alpha levels can be used as long as they are determined and preregistered by the researcher before the data is analyzed." data-bs-trigger="click" data-bs-placement="top" tabindex="0" data-glossary-term="alpha">alpha</button></p>
-<p>Set popup to “none” if you want to add the definition to the glossary table, but not use a popup.</p>
-<p><code>{{&lt; glossary alpha popup="none" &gt;}}</code></p>
-<p><span class="glossary">alpha</span></p>
-</section>
-<section id="definitions" class="level3">
-<h3 class="anchored" data-anchor-id="definitions">Definitions</h3>
-<p>If you need to include a definition for a term that is not in the glossary file or is different from the one in the glossary file, you can set the <code>def</code> argument.</p>
-<p><code>{{&lt; glossary quarto def="An open-source scientific and technical publishing system" &gt;}}</code></p>
-<p><button class="glossary" id="glossary-quarto-2485" data-bs-toggle="popover" data-bs-content="An open-source scientific and technical publishing system" data-bs-trigger="click" data-bs-placement="top" tabindex="0" data-glossary-term="quarto">quarto</button></p>
-</section>
-<section id="add-to-table" class="level3">
-<h3 class="anchored" data-anchor-id="add-to-table">Add to Table</h3>
-<p>If you don’t want to add a glossary item to the table, set <code>add_to_table=false</code>.</p>
-<p><code>{{&lt; glossary SESOI add_to_table=true &gt;}}</code></p>
-<p><button class="glossary" id="glossary-sesoi-2436" data-bs-toggle="popover" data-bs-content="Smallest Effect Size of Interest: the smallest effect that is theoretically or practically meaningfulSee Equivalence Testing for Psychological Research for a tutorial on methods for choosing an SESOI." data-bs-trigger="click" data-bs-placement="top" tabindex="0" data-glossary-term="sesoi">SESOI</button></p>
-<p><code>{{&lt; glossary R def="The best language" add_to_table=false &gt;}}</code></p>
-<p><button class="glossary" id="glossary-r-8410" data-bs-toggle="popover" data-bs-content="The best language" data-bs-trigger="click" data-bs-placement="top" tabindex="0" data-glossary-term="r">R</button></p>
-</section>
-<section id="table" class="level3">
-<h3 class="anchored" data-anchor-id="table">Table</h3>
-<p>If you set <code>table=true</code>, you will get a glossary table with all the terms you’ve defined on this page.</p>
-<p><code>{{&lt; glossary table=true &gt;}}</code></p>
-<table class="glossary_table">
-<tbody><tr><th> Term </th><th> Definition </th></tr>
-<tr><td>sesoi</td><td>Smallest Effect Size of Interest: the smallest effect that is theoretically or practically meaningfulSee Equivalence Testing for Psychological Research for a tutorial on methods for choosing an SESOI.</td></tr>
-<tr><td>alpha</td><td>The threshold chosen in Neyman-Pearson hypothesis testing to distinguish test results that lead to the decision to reject the null hypothesis, or not, based on the desired upper bound of the Type 1 error rate. An alpha level of 5% is most commonly used, but other alpha levels can be used as long as they are determined and preregistered by the researcher before the data is analyzed.</td></tr>
-<tr><td>quarto</td><td>An open-source scientific and technical publishing system</td></tr>
-<tr><td>effect size</td><td>‘quantitative reflection of the magnitude of some phenomenon that is used for the purpose of addressing a question of interest’ (Kelley &amp; Preacher, 2012)</td></tr>
-<tr><td>power</td><td>The probability of rejecting the null hypothesis when it is false, for a specific analysis, effect size, sample size, and criteria for significance.</td></tr>
-</tbody></table>
-</section>
-</section>
-<section id="accessibility-features" class="level2">
-<h2 class="anchored" data-anchor-id="accessibility-features">Accessibility Features</h2>
-<p>This extension is designed to be fully accessible and meets WCAG 2.2 AA standards:</p>
-<section id="keyboard-navigation" class="level3">
-<h3 class="anchored" data-anchor-id="keyboard-navigation">Keyboard Navigation</h3>
-<ul>
-<li>Use <strong>Tab</strong> to navigate between glossary terms</li>
-<li>Press <strong>Enter</strong> or <strong>Space</strong> to open/close definition popups</li>
-<li>Press <strong>Escape</strong> to close any open popup</li>
-<li>Focus indicators clearly show which term is selected</li>
-</ul>
-</section>
-<section id="screen-reader-support" class="level3">
-<h3 class="anchored" data-anchor-id="screen-reader-support">Screen Reader Support</h3>
-<ul>
-<li>Bootstrap popovers provide built-in ARIA support</li>
-<li>Terms are marked with proper Bootstrap popover attributes</li>
-<li>Definitions are announced correctly when activated</li>
-</ul>
-</section>
-<section id="user-experience" class="level3">
-<h3 class="anchored" data-anchor-id="user-experience">User Experience</h3>
-<ul>
-<li>Only one popup is visible at a time for clarity</li>
-<li>Popups can be dismissed by clicking outside or pressing Escape</li>
-<li>Definitions persist until explicitly closed (no accidental dismissal)</li>
-<li>Visual focus indicators help keyboard users understand their location</li>
-</ul>
-</section>
-<section id="technical-implementation" class="level3">
-<h3 class="anchored" data-anchor-id="technical-implementation">Technical Implementation</h3>
-<p>This extension leverages Quarto’s built-in Bootstrap functionality: - Uses Bootstrap 5 popovers for reliable cross-browser compatibility - No custom positioning or styling code needed - Automatic responsive behavior on mobile devices - Built-in accessibility features from Bootstrap framework</p>
-</section>
-<section id="removed-features" class="level3">
-<h3 class="anchored" data-anchor-id="removed-features">Removed Features</h3>
-<p>The “hover” popup mode has been removed as it relied on native browser tooltips that do not meet accessibility standards. All functionality is now available through the accessible “click” mode using Bootstrap popovers.</p>
+<section id="mit-license" class="level1">
+<h1>MIT License</h1>
+<p>Copyright (c) 2023 Lisa DeBruine</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
