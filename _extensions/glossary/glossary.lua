@@ -111,17 +111,36 @@ return {
 
   addHTMLDeps()
 
-  -- create glossary listing - clean and simple
+  -- create glossary listing using Quarto's native listing functionality
   if kwExists(kwargs, "table") then
     local sortedTable = sortByKeys(globalGlossaryTable)
     
-    -- Simple definition list using HTML5 semantic elements
+    -- Generate HTML that matches Quarto's listing structure
     local items = {}
     for key, value in pairs(sortedTable) do
-        table.insert(items, string.format('<dt>%s</dt><dd>%s</dd>', key, value))
+        table.insert(items, string.format([[
+<div class="g-col-12 g-col-sm-6 g-col-md-4">
+  <div class="card h-100">
+    <div class="card-body d-flex flex-column">
+      <h5 class="card-title">%s</h5>
+      <p class="card-text">%s</p>
+    </div>
+  </div>
+</div>
+]], key, value))
     end
     
-    local listingHtml = '<dl>\n' .. table.concat(items, '\n') .. '\n</dl>'
+    local listingHtml = string.format([[
+<div id="listing-glossary" class="quarto-listing quarto-listing-container-default">
+  <div class="list">
+    <div class="quarto-listing-default">
+      <div class="grid">
+        %s
+      </div>
+    </div>
+  </div>
+</div>
+]], table.concat(items, '\n'))
     
     return pandoc.RawBlock('html', listingHtml)
   end
