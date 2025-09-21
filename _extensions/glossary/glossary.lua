@@ -45,6 +45,37 @@ function sortByKeys(tbl)
     return sortedTable
 end
 
+-- Function to escape JSON strings
+local function escapeJson(str)
+    if str == nil then return "null" end
+    str = tostring(str)
+    -- Replace backslashes first to avoid double escaping
+    str = str:gsub("\\", "\\\\")
+    -- Replace quotes
+    str = str:gsub('"', '\\"')
+    -- Replace control characters
+    str = str:gsub("\n", "\\n")
+    str = str:gsub("\r", "\\r")
+    str = str:gsub("\t", "\\t")
+    -- Replace form feed and backspace (rare but possible)
+    str = str:gsub("\f", "\\f")
+    str = str:gsub("\b", "\\b")
+    return '"' .. str .. '"'
+end
+
+-- Function to generate JSON data for Quarto listing
+local function generateGlossaryJson(glossaryTable)
+    local jsonItems = {}
+    local sortedTable = sortByKeys(glossaryTable)
+    
+    for term, definition in pairs(sortedTable) do
+        local jsonItem = '{"term": ' .. escapeJson(term) .. ', "definition": ' .. escapeJson(definition) .. '}'
+        table.insert(jsonItems, jsonItem)
+    end
+    
+    return '[' .. table.concat(jsonItems, ', ') .. ']'
+end
+
 local function read_metadata_file(fname)
   local metafile = io.open(fname, 'r')
   local content = metafile:read("*a")
@@ -113,18 +144,118 @@ return {
 
   -- create glossary table
   if kwExists(kwargs, "table") then
-    local gt = "<table class='glossary_table'>\n"
-    gt = gt .. "<tr><th> Term </th><th> Definition </th></tr>\n"
+    -- Generate JSON data for the glossary
+    local jsonData = generateGlossaryJson(globalGlossaryTable)
+    
+    -- Generate Quarto listing div with proper attributes
+    local listingHtml = [[
+<div id="glossary-listing" data-listing-type="default">
+  <div class="listing-search">
+    <input type="search" placeholder="Search terms..." class="form-control search" id="listing-search">
+  </div>
+  <div class="listing-container">
+    <div class="listing-header">
+      <div class="listing-sort">
+        <button class="listing-sort-btn btn btn-outline-secondary" data-sort="term">Term</button>
+        <button class="listing-sort-btn btn btn-outline-secondary" data-sort="definition">Definition</button>
+      </div>
+    </div>
+    <div class="listing-content">
+      <div class="listing-items">
+        <!-- Items will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+</div>
 
-    local sortedTable = sortByKeys(globalGlossaryTable)
+<script>
+// Initialize glossary listing
+(function() {
+  const glossaryData = ]] .. jsonData .. [[;
+  let filteredData = [...glossaryData];
+  let sortField = 'term';
+  let sortOrder = 'asc';
+  
+  function renderItems() {
+    const container = document.querySelector('#glossary-listing .listing-items');
+    if (!container) return;
+    
+    container.innerHTML = filteredData.map(item => 
+      `<div class="listing-item glossary-item">
+        <div class="glossary-term">${escapeHtml(item.term)}</div>
+        <div class="glossary-definition">${escapeHtml(item.definition)}</div>
+      </div>`
+    ).join('');
+  }
+  
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  function sortData(field) {
+    if (sortField === field) {
+      sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortField = field;
+      sortOrder = 'asc';
+    }
+    
+    filteredData.sort((a, b) => {
+      const valA = a[field].toLowerCase();
+      const valB = b[field].toLowerCase();
+      const comparison = valA.localeCompare(valB);
+      return sortOrder === 'asc' ? comparison : -comparison;
+    });
+    
+    // Update button states
+    document.querySelectorAll('.listing-sort-btn').forEach(btn => {
+      btn.classList.remove('active', 'asc', 'desc');
+      if (btn.dataset.sort === field) {
+        btn.classList.add('active', sortOrder);
+      }
+    });
+    
+    renderItems();
+  }
+  
+  function filterData(searchTerm) {
+    const term = searchTerm.toLowerCase();
+    filteredData = glossaryData.filter(item => 
+      item.term.toLowerCase().includes(term) || 
+      item.definition.toLowerCase().includes(term)
+    );
+    renderItems();
+  }
+  
+  // Initialize when DOM is ready
+  function init() {
+    // Set up search
+    const searchInput = document.querySelector('#listing-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => filterData(e.target.value));
+    }
+    
+    // Set up sorting
+    document.querySelectorAll('.listing-sort-btn').forEach(btn => {
+      btn.addEventListener('click', () => sortData(btn.dataset.sort));
+    });
+    
+    // Initial sort and render
+    sortData('term');
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+]]
 
-    for key, value in pairs(sortedTable) do
-        gt = gt .. "<tr><td>" .. key
-        gt = gt .. "</td><td>" .. value .. "</td></tr>\n"
-    end
-    gt = gt .. "</table>"
-
-    return pandoc.RawBlock('html', gt)
+    return pandoc.RawBlock('html', listingHtml)
   end
 
   -- or set up in-text term

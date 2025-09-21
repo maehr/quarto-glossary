@@ -106,7 +106,12 @@ If you don't want to add a glossary item to the table, set `add_to_table=false`.
 
 ### Table
 
-If you set `table=true`, you will get a glossary table with all the terms you've defined on this page.
+If you set `table=true`, you will get an interactive glossary listing with all the terms you've defined on this page. The listing includes:
+
+- **Search functionality**: Filter terms by typing in the search box
+- **Sortable columns**: Click on "Term" or "Definition" buttons to sort alphabetically  
+- **Responsive design**: Adapts to different screen sizes
+- **Accessibility**: Fully keyboard accessible and screen reader compatible
 
 `{{{< glossary table=true >}}}`
 

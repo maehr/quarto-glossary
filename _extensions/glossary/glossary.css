@@ -56,3 +56,106 @@
 .glossary_table tr:nth-child(even) {
   background-color: #99999933;
 }
+
+/* Glossary listing styles */
+#glossary-listing {
+  margin: 1rem 0;
+}
+
+.listing-search {
+  margin-bottom: 1rem;
+}
+
+.listing-search .form-control {
+  max-width: 300px;
+}
+
+.listing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.listing-sort {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.listing-sort-btn {
+  position: relative;
+  font-size: 0.875rem;
+  padding: 0.375rem 0.75rem;
+}
+
+.listing-sort-btn.active {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+}
+
+.listing-sort-btn.active:after {
+  content: " ↑";
+  margin-left: 0.25rem;
+}
+
+.listing-sort-btn.active.desc:after {
+  content: " ↓";
+}
+
+.listing-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.glossary-item {
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  background-color: #f8f9fa;
+}
+
+.glossary-term {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+}
+
+.glossary-definition {
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .glossary-item {
+    background-color: #343a40;
+    border-color: #495057;
+  }
+  
+  .glossary-term {
+    color: #f8f9fa;
+  }
+  
+  .glossary-definition {
+    color: #ced4da;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .listing-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .listing-search .form-control {
+    max-width: 100%;
+    width: 100%;
+  }
+}
