@@ -6,3 +6,9 @@
 .quarto
 
 /.quarto/
+
+# Test files
+test-*.html
+glossary-listing.json
+
+**/*.quarto_ipynb
