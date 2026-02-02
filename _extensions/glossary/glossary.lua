@@ -102,7 +102,7 @@ local function copyInlines(inlines)
     end
     local copied = {}
     for key, inner in pairs(value) do
-      copied[deepCopy(key)] = deepCopy(inner)
+      copied[key] = deepCopy(inner)
     end
     return setmetatable(copied, getmetatable(value))
   end
@@ -179,7 +179,7 @@ return {
       local definitionBlocks = parseBlocks(value)
       local definitions = {}
       if #definitionBlocks > 0 then
-        table.insert(definitions, definitionBlocks)
+        definitions = { definitionBlocks }
       end
       table.insert(entries, { termInlines, definitions })
     end
