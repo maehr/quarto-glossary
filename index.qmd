@@ -84,6 +84,9 @@ Set popup to "none" if you want to add the definition to the glossary table, but
 
 {{< glossary alpha popup="none" >}}
 
+For non-HTML formats (including docx and pdf), glossary terms render as plain text
+with the definition added as a footnote, and glossary tables render as definition lists.
+
 ### Definitions
 
 If you need to include a definition for a term that is not in the glossary file or is different from the one in the glossary file, you can set the `def` argument.

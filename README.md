@@ -7,6 +7,9 @@ definition, and to create table of defined terms at the end of a document.
 
 See <https://debruine.github.io/quarto-glossary> for examples.
 
+For non-HTML formats (including docx and pdf), glossary terms render as plain text
+with the definition added as a footnote, and glossary tables render as definition lists.
+
 ## Installing
 
 ```sh
@@ -27,6 +30,5 @@ This extension is designed to meet WCAG 2.2 AA accessibility standards:
 - **No hover-only content**: All functionality is available through keyboard and mouse interaction
 
 Note: The previous "hover" popup mode has been removed as it did not meet accessibility standards.
-
 
 
