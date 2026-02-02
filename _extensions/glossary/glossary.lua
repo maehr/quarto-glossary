@@ -77,7 +77,7 @@ end
 
 local function parseBlocks(text)
   if text == nil or text == "" then
-    return { pandoc.Para({ pandoc.Str("") }) }
+    return {}
   end
   local ok, doc = pcall(pandoc.read, text, "markdown")
   if ok and doc ~= nil and doc.blocks ~= nil then
@@ -226,7 +226,7 @@ return {
   end
 
   local inlines = parseInlines(display)
-  if options.popup == "none" or def == "" then
+  if options.popup == "none" or def == nil or def == "" then
     return pandoc.Span(inlines)
   end
 
