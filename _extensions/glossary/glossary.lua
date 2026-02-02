@@ -96,18 +96,18 @@ local function copyInlines(inlines)
     return cloned
   end
 
-  local function deepCopy(value)
+  local function deepCopyTable(value)
     if type(value) ~= "table" then
       return value
     end
     local copied = {}
     for key, inner in pairs(value) do
-      copied[key] = deepCopy(inner)
+      copied[key] = deepCopyTable(inner)
     end
     return setmetatable(copied, getmetatable(value))
   end
 
-  return deepCopy(inlines)
+  return deepCopyTable(inlines)
 end
 
 ---Merge user provided options with defaults
@@ -177,10 +177,7 @@ return {
     for key, value in pairs(sortedTable) do
       local termInlines = parseInlines(key)
       local definitionBlocks = parseBlocks(value)
-      local definitions = {}
-      if #definitionBlocks > 0 then
-        definitions = { definitionBlocks }
-      end
+      local definitions = { definitionBlocks }
       table.insert(entries, { termInlines, definitions })
     end
 
