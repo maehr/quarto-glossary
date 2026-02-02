@@ -254,13 +254,13 @@ return {
   end
 
   local inlines = parseInlines(display)
-  if options.popup == "none" or (def == nil or def == "") then
+  local defBlocks = parseBlocks(def)
+  if options.popup == "none" or #defBlocks == 0 then
     return pandoc.Span(inlines)
   end
 
-  -- Copy inlines so appending a note does not mutate the original list.
+  -- Copy inlines so appending a note does not mutate the base term content.
   local noteInlines = copyInlines(inlines)
-  local defBlocks = parseBlocks(def)
   table.insert(noteInlines, pandoc.Note(defBlocks))
   return pandoc.Span(noteInlines)
 
