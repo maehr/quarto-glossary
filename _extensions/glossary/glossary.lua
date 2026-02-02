@@ -101,8 +101,13 @@ local function copyInlines(inlines)
       return value
     end
     local copied = {}
+    for index, inner in ipairs(value) do
+      copied[index] = deepCopyTable(inner)
+    end
     for key, inner in pairs(value) do
-      copied[key] = deepCopyTable(inner)
+      if type(key) ~= "number" then
+        copied[key] = deepCopyTable(inner)
+      end
     end
     return setmetatable(copied, getmetatable(value))
   end
@@ -177,6 +182,7 @@ return {
     for key, value in pairs(sortedTable) do
       local termInlines = parseInlines(key)
       local definitionBlocks = parseBlocks(value)
+      -- DefinitionList expects a list of definition block lists.
       local definitions = { definitionBlocks }
       table.insert(entries, { termInlines, definitions })
     end
