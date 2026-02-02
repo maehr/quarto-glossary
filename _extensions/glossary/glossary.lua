@@ -90,8 +90,8 @@ local function copyInlines(inlines)
   local clone = pandoc.utils and pandoc.utils.clone or nil
   if clone then
     local cloned = {}
-    for i, inline in ipairs(inlines) do
-      cloned[i] = clone(inline)
+    for _, inline in ipairs(inlines) do
+      table.insert(cloned, clone(inline))
     end
     return cloned
   end
