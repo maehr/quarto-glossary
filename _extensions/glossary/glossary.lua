@@ -254,7 +254,7 @@ return {
   end
 
   local inlines = parseInlines(display)
-  if options.popup == "none" or def == nil or def == "" then
+  if options.popup == "none" or (def == nil or def == "") then
     return pandoc.Span(inlines)
   end
 
