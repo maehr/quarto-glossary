@@ -86,6 +86,14 @@ local function parseBlocks(text)
   return { pandoc.Para({ pandoc.Str(text) }) }
 end
 
+local function copyInlines(inlines)
+  local cloned = {}
+  for i, inline in ipairs(inlines) do
+    cloned[i] = inline
+  end
+  return cloned
+end
+
 ---Merge user provided options with defaults
 ---@param userOptions table
 local function mergeOptions(userOptions, meta)
@@ -153,7 +161,11 @@ return {
     for key, value in pairs(sortedTable) do
       local termInlines = parseInlines(key)
       local definitionBlocks = parseBlocks(value)
-      table.insert(entries, { termInlines, { definitionBlocks } })
+      local definitions = {}
+      if #definitionBlocks > 0 then
+        table.insert(definitions, definitionBlocks)
+      end
+      table.insert(entries, { termInlines, definitions })
     end
 
     return pandoc.DefinitionList(entries)
@@ -230,8 +242,9 @@ return {
     return pandoc.Span(inlines)
   end
 
-  table.insert(inlines, pandoc.Note(parseBlocks(def)))
-  return pandoc.Span(inlines)
+  local noteInlines = copyInlines(inlines)
+  table.insert(noteInlines, pandoc.Note(parseBlocks(def)))
+  return pandoc.Span(noteInlines)
 
 end
 
