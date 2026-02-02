@@ -66,7 +66,7 @@ end
 
 local function parseInlines(text)
   if text == nil or text == "" then
-    return { pandoc.Str(text or "") }
+    return {}
   end
   local ok, doc = pcall(pandoc.read, text, "markdown")
   if ok and doc ~= nil and #doc.blocks > 0 then
