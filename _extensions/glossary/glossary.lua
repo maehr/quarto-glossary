@@ -87,16 +87,25 @@ local function parseBlocks(text)
 end
 
 local function copyInlines(inlines)
-  local cloned = {}
   local clone = pandoc.utils and pandoc.utils.clone or nil
-  for i, inline in ipairs(inlines) do
-    if clone then
+  if clone then
+    local cloned = {}
+    for i, inline in ipairs(inlines) do
       cloned[i] = clone(inline)
-    else
-      cloned[i] = inline
+    end
+    return cloned
+  end
+
+  local doc = pandoc.Pandoc({ pandoc.Para(inlines) })
+  local json = pandoc.write(doc, "json")
+  local parsed = pandoc.read(json, "json")
+  if parsed ~= nil and parsed.blocks ~= nil and #parsed.blocks > 0 then
+    local first = parsed.blocks[1]
+    if first.t == "Para" or first.t == "Plain" then
+      return first.content
     end
   end
-  return cloned
+  return inlines
 end
 
 ---Merge user provided options with defaults
@@ -249,7 +258,8 @@ return {
 
   -- Copy inlines to avoid mutating the original list when appending the note.
   local noteInlines = copyInlines(inlines)
-  table.insert(noteInlines, pandoc.Note(parseBlocks(def)))
+  local defBlocks = parseBlocks(def)
+  table.insert(noteInlines, pandoc.Note(defBlocks))
   return pandoc.Span(noteInlines)
 
 end
