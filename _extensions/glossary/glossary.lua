@@ -96,16 +96,18 @@ local function copyInlines(inlines)
     return cloned
   end
 
-  local doc = pandoc.Pandoc({ pandoc.Para(inlines) })
-  local json = pandoc.write(doc, "json")
-  local parsed = pandoc.read(json, "json")
-  if parsed ~= nil and parsed.blocks ~= nil and #parsed.blocks > 0 then
-    local first = parsed.blocks[1]
-    if first.t == "Para" or first.t == "Plain" then
-      return first.content
+  local function deepCopy(value)
+    if type(value) ~= "table" then
+      return value
     end
+    local copied = {}
+    for key, inner in pairs(value) do
+      copied[deepCopy(key)] = deepCopy(inner)
+    end
+    return setmetatable(copied, getmetatable(value))
   end
-  return inlines
+
+  return deepCopy(inlines)
 end
 
 ---Merge user provided options with defaults
@@ -256,7 +258,7 @@ return {
     return pandoc.Span(inlines)
   end
 
-  -- Copy inlines to avoid mutating the original list when appending the note.
+  -- Copy inlines so appending a note does not mutate the original list.
   local noteInlines = copyInlines(inlines)
   local defBlocks = parseBlocks(def)
   table.insert(noteInlines, pandoc.Note(defBlocks))
