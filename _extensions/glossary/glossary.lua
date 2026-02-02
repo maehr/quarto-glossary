@@ -96,23 +96,23 @@ local function copyInlines(inlines)
     return cloned
   end
 
-  local function deepCopyInlinesTable(value)
+  local function deepCopyTable(value)
     if type(value) ~= "table" then
       return value
     end
     local copied = {}
     for index, inner in ipairs(value) do
-      copied[index] = deepCopyInlinesTable(inner)
+      copied[index] = deepCopyTable(inner)
     end
     for key, inner in pairs(value) do
       if type(key) ~= "number" then
-        copied[key] = deepCopyInlinesTable(inner)
+        copied[key] = deepCopyTable(inner)
       end
     end
     return setmetatable(copied, getmetatable(value))
   end
 
-  return deepCopyInlinesTable(inlines)
+  return deepCopyTable(inlines)
 end
 
 ---Merge user provided options with defaults
