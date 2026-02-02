@@ -88,8 +88,13 @@ end
 
 local function copyInlines(inlines)
   local cloned = {}
+  local clone = pandoc.utils and pandoc.utils.clone or nil
   for i, inline in ipairs(inlines) do
-    cloned[i] = inline
+    if clone then
+      cloned[i] = clone(inline)
+    else
+      cloned[i] = inline
+    end
   end
   return cloned
 end
@@ -242,6 +247,7 @@ return {
     return pandoc.Span(inlines)
   end
 
+  -- Copy inlines to avoid mutating the original list when appending the note.
   local noteInlines = copyInlines(inlines)
   table.insert(noteInlines, pandoc.Note(parseBlocks(def)))
   return pandoc.Span(noteInlines)
