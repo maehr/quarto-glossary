@@ -96,23 +96,23 @@ local function copyInlines(inlines)
     return cloned
   end
 
-  local function deepCopyTable(value)
+  local function deepCopyInlinesTable(value)
     if type(value) ~= "table" then
       return value
     end
     local copied = {}
     for index, inner in ipairs(value) do
-      copied[index] = deepCopyTable(inner)
+      copied[index] = deepCopyInlinesTable(inner)
     end
     for key, inner in pairs(value) do
       if type(key) ~= "number" then
-        copied[key] = deepCopyTable(inner)
+        copied[key] = deepCopyInlinesTable(inner)
       end
     end
     return setmetatable(copied, getmetatable(value))
   end
 
-  return deepCopyTable(inlines)
+  return deepCopyInlinesTable(inlines)
 end
 
 ---Merge user provided options with defaults
@@ -258,7 +258,7 @@ return {
 
   local inlines = parseInlines(display)
   local defBlocks = parseBlocks(def)
-  if options.popup == "none" or defBlocks == nil or #defBlocks == 0 then
+  if options.popup == "none" or #defBlocks == 0 then
     return pandoc.Span(inlines)
   end
 
