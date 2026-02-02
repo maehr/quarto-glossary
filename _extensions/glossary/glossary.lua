@@ -65,6 +65,9 @@ local function readGlossary(path)
 end
 
 local function parseInlines(text)
+  if text == nil or text == "" then
+    return { pandoc.Str(text or "") }
+  end
   local ok, doc = pcall(pandoc.read, text, "markdown")
   if ok and doc ~= nil and #doc.blocks > 0 then
     local first = doc.blocks[1]
