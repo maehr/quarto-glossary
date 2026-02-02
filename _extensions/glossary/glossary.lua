@@ -87,7 +87,7 @@ local function parseBlocks(text)
 end
 
 local function copyInlines(inlines)
-  local clone = pandoc.utils and pandoc.utils.clone or nil
+  local clone = pandoc.utils and pandoc.utils.clone
   if clone then
     local cloned = {}
     for _, inline in ipairs(inlines) do
@@ -252,7 +252,7 @@ return {
 
   local inlines = parseInlines(display)
   local defBlocks = parseBlocks(def)
-  if options.popup == "none" or #defBlocks == 0 then
+  if options.popup == "none" or defBlocks == nil or #defBlocks == 0 then
     return pandoc.Span(inlines)
   end
 
